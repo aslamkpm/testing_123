@@ -12,13 +12,25 @@ whether or not JavaScript runs.
 
 ## Configure
 
-Set the destination in **three** places in `index.html` — `window.DESTINATION`,
-`<link rel="canonical">`, and the `<meta http-equiv="refresh">` — and optionally
-in `_redirects`:
+There are **four** things to change in `index.html`:
+
+1. `window.DESTINATION` — drives the JS layer (currently `""`, i.e. disabled)
+2. `<link rel="canonical">` — crawler/SEO hint
+3. `<meta http-equiv="refresh">` — the no-JS redirect
+4. The visible **Continue** link in the body — the fallback when JS is blocked
+
+Plus one optional: the rule in `_redirects` (Cloudflare/Netlify only).
+
+Find all of them with:
 
 ```bash
-grep -rn 'example.com/your-destination' .   # find every occurrence
+grep -rn 'example.com/your-destination\|window.DESTINATION = ""' .
 ```
+
+Static HTML cannot share one variable between a script and an attribute, so
+items 2–4 must each be edited by hand. Missing item 4 is the common mistake:
+the page redirects correctly for everyone until someone blocks JavaScript, at
+which point the fallback link quietly sends them to the old destination.
 
 `location.replace()` is used rather than `location.href` so the redirect does
 not trap the visitor in Back-button history.
