@@ -1,0 +1,4 @@
+# Cloudflare Pages / Netlify only — plain GitHub Pages IGNORES this file.
+# GitHub Pages has no static 301 mechanism; index.html's meta-refresh covers it.
+# The destination must match the one in index.html.
+/*    https://example.com/your-destination    301

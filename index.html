@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redirecting…</title>
+
+<!--
+  Three places set the destination, because static HTML cannot share one
+  variable between an attribute and a script. Edit all three; they are marked
+  EDIT ME.
+
+  Note: the meta-refresh layer always fires, so the placeholder URL is live
+  until you replace it. Only the JS layer honours the empty-DESTINATION
+  switch below.
+-->
+<script>
+  window.DESTINATION = ""; // <-- EDIT ME (leave empty to disable the JS redirect)
+</script>
+
+<!-- Crawler + SEO hint: tells search engines the real target. -->
+<link rel="canonical" href="https://example.com/your-destination"> <!-- <-- EDIT ME -->
+
+<!-- No-JS fallback. Also the mechanism most crawlers follow. -->
+<meta http-equiv="refresh" content="0; url=https://example.com/your-destination"> <!-- <-- EDIT ME -->
+
+<!-- Immediate redirect when JS is available; replace avoids a Back-button trap. -->
+<script>
+  (function () {
+    var dest = window.DESTINATION;
+    if (dest) {
+      window.location.replace(dest);
+    }
+  })();
+</script>
+
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: grid; place-items: center;
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #0f172a; color: #e2e8f0;
+  }
+  main { text-align: center; padding: 2rem; max-width: 32rem; }
+  h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
+  p  { margin: .25rem 0; color: #94a3b8; }
+  a  { color: #38bdf8; }
+  .bar {
+    margin: 1.5rem auto 0; width: 12rem; height: 3px;
+    background: #1e293b; border-radius: 999px; overflow: hidden;
+  }
+  .bar::after {
+    content: ""; display: block; height: 100%; width: 40%;
+    background: #38bdf8; border-radius: 999px;
+    animation: slide 1s ease-in-out infinite;
+  }
+  @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+  @media (prefers-reduced-motion: reduce) { .bar::after { animation: none; } }
+</style>
+</head>
+<body>
+  <main>
+    <h1>Redirecting…</h1>
+    <p>If you are not redirected automatically, use the link below.</p>
+    <p><a href="https://example.com/your-destination">Continue</a></p>
+    <div class="bar" role="presentation"></div>
+  </main>
+</body>
+</html>
